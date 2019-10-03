@@ -19,6 +19,7 @@ ENV TZ 'Europe/Tallinn'
 
 RUN apt-get -y update && \
     apt-get -y upgrade && \
+    apt-get -y install sudo && \
     apt-get -y install vim && \
     apt-get -y install wget && \
     apt-get -y install git && \
@@ -32,7 +33,27 @@ RUN apt-get -y update && \
     apt-get autoremove && \
     rm -rf /var/lib/apt/lists/*
 
-RUN echo 'root:root1234' |chpasswd
+# Get Script
+
+RUN wget https://raw.githubusercontent.com/best7766/work/master/mediabots_ui.sh
+RUN chmod +x /mediabots_ui.sh
+
+# Set Passwords and Domain
+# Login      root/best7766
+# Wordpress  best/best7766
+# PhpMyAdmin root/php_7766
+# MySql      root/sql_7766
+
+
+RUN echo 'root:best7766' |chpasswd
+RUN sudo sed -i 's/phpmyadmin_PASSWORD/php_7766/g' mediabots_ui.sh 
+RUN sudo sed -i 's/mysql_PASSWORD/sql_7766/g' mediabots_ui.sh
+RUN sudo sed -i 's/wordpress_DATABASE/word_7766/g' mediabots_ui.sh
+RUN sudo sed -i 's/wordpress_USER/best/g' mediabots_ui.sh
+RUN sudo sed -i 's/wordpress_PASSWORD/best7766/g' mediabots_ui.sh
+
+# Set new Domain name
+RUN sudo sed -i 's/bummer.ru/mydomain.com/g' mediabots_ui.sh
 
 RUN sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
@@ -40,8 +61,6 @@ RUN mkdir /root/.ssh
 
 # Docker config
 
-RUN wget https://raw.githubusercontent.com/best7766/work/master/mediabots_ui.sh
-RUN chmod +x /mediabots_ui.sh
 EXPOSE 3389 22 80 443
 ENTRYPOINT ["/mediabots_ui.sh"] 
 CMD    ["/usr/sbin/sshd", "-D"]
