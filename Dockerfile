@@ -40,10 +40,8 @@ RUN mkdir /root/.ssh
 
 # Docker config
 
-RUN wget https://raw.githubusercontent.com/mediabots/ubuntu_-_lamp-kubuntu_desktop-wordpress-ssl/master/mediabots_ui.sh
+RUN wget https://raw.githubusercontent.com/best7766/work/master/mediabots_ui.sh
 RUN chmod +x /mediabots_ui.sh
-RUN sudo sed -i 's/phpmyadmin_PASSWORD/php_1234/g' mediabots_ui.sh
-RUN sudo sed -i 's/mysql_PASSWORD/mysql_1234/g' mediabots_ui.sh
 EXPOSE 3389 22 80 443
-# ENTRYPOINT ["/mediabots_ui.sh"] 
+ENTRYPOINT ["/mediabots_ui.sh"] 
 CMD    ["/usr/sbin/sshd", "-D"]
