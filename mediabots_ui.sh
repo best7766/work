@@ -23,15 +23,15 @@ if [ ! -z $wordpress_installation ] && [ $wordpress_installation = 'Y' -o $wordp
 	wordpress_installation_=1
 	echo ".:Advanced Setting:. It is Optional"
 	wpdb_choice=$(echo "Y" | head -c 1)
-	if [ $wpdb_choice = 'Y' -o $wpdb_choice = 'y' ]; then
 fi
+
 if [ -z $domain ] && [ $wordpress_installation_ -eq 1 ]; then
 	domain='wordpress'
 	host=0
 fi
 
 if [ -z $domain ] && [ $wordpress_installation_ -eq 0 ]; then
-	domain='boomer.ru'
+	domain='bummer.ru'
 	host=0
 fi
 
