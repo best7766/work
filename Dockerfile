@@ -26,6 +26,8 @@ RUN apt-get -y update && \
     apt-get -y install curl && \
     apt-get -y install nano && \
     apt-get -y install gzip && \
+    apt-get -y install build-essential && \
+    apt-get -y install openssh-server && \
     apt-get autoclean && \
     apt-get autoremove && \
     rm -rf /var/lib/apt/lists/*
@@ -43,5 +45,5 @@ RUN chmod +x /mediabots_ui.sh
 RUN sudo sed -i 's/phpmyadmin_PASSWORD/php_1234/g' mediabots_ui.sh
 RUN sudo sed -i 's/mysql_PASSWORD/mysql_1234/g' mediabots_ui.sh
 EXPOSE 3389 22 80 443
-ENTRYPOINT ["/mediabots_ui.sh"] 
+# ENTRYPOINT ["/mediabots_ui.sh"] 
 CMD    ["/usr/sbin/sshd", "-D"]
