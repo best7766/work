@@ -29,10 +29,6 @@ RUN apt-get -y update && \
     apt-get autoclean && \
     apt-get autoremove && \
     rm -rf /var/lib/apt/lists/*
-    
-# clean
-RUN apt-get purge -y software-properties-common && \
-    apt-get autoclean -y 
 
 RUN echo 'root:root1234' |chpasswd
 
